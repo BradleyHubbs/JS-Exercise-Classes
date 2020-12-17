@@ -42,8 +42,23 @@ class Airplane {
   */
   
  class Person {
-    
+  constructor(name, age){
+    this.name = name;
+    this.age = age;
+    this.stomach = [];
+     }
+  eat(someFood){
+    if(this.stomach.length < 10 ) {
+      this.stomach.push(someFood);
+    }
   }
+  poop(){
+    this.stomach = [];
+  }
+ toString(){
+   return `${this.name}, ${this.age}`
+ }
+}
   
   /*
     TASK 2
@@ -60,7 +75,31 @@ class Airplane {
   */
   
  class Car {
-    
+  constructor(model, milesPerGallon){
+    this.model = model;
+    this.milesPerGallon = milesPerGallon;
+    this.tank = 0;
+    this.odometer = 0
+  }
+  fill(gallons){
+    this.tank += gallons;
+  }
+  drive(distance){
+   this.distance = distance;
+   this.gallonsNeeded = this.distance / this.milesPerGallon;
+   this.maxDistance = this.tank * this.milesPerGallon;
+   this.tank -= this.gallonsNeeded;
+   if (this.distance > this.maxDistance){
+     this.distanceTraveled = this.maxDistance;
+     this.odometer += this.distanceTraveled;
+     this.tank = 0;
+     return `I ran out of fuel at ${this.odometer} miles!`
+   }
+   else {
+     this.distanceTraveled = this.distance;
+     this.odometer += this.distanceTraveled;
+   }
+    }
   }
   
   /*
@@ -76,8 +115,15 @@ class Airplane {
           + {name} and {location} of course come from the instance's own properties.
   */
  class Lambdasian {
-    
+  constructor(obj){
+    this.name = obj.name;
+    this.age = obj.age;
+    this.location = obj.location;
   }
+  speak(){
+    return `Hello my name is ${this.name}, I am from ${this.location}`
+  }
+ }
   
   /*
     TASK 4
@@ -93,9 +139,30 @@ class Airplane {
           + `demo` receives a `subject` string as an argument and returns the phrase 'Today we are learning about {subject}' where subject is the param passed in.
           + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
   */
- class Instructor {
-
+ class Instructor extends Lambdasian{
+  constructor(instObj){
+    super(instObj);
+    this.specialty = instObj.specialty;
+    this.favLanguage = instObj.favLanguage;
+    this.catchPhrase = instObj.catchPhrase;
+  }
+    demo(subject){
+      this.subject = subject.subject;
+      return `Today we are learning about ${this.subject}`;
+    }
+   
  }
+
+
+let josh = new Instructor({
+ name: "josh",
+ age: 35,
+ location: "CA",
+ specialty: "CS",
+ favLanguage: "JS",
+ catchPhrase: "LUKE"
+})
+console.log(josh.demo("math"));
   /*
     TASK 5
       - Write a Student class extending Lambdasian.
